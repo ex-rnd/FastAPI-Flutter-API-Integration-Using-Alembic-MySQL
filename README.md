@@ -12,7 +12,7 @@ First, see it in action:
 ```bash
 uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 ```
-2. - In Postman, set the base_url to `localhost:8000`, the headers to `Content-Type`:`application/json` and send a POST /new with the body (below) to create a new fruit.
+2. In Postman, set the base_url to `localhost:8000`, the headers to `Content-Type`:`application/json` and send a POST /new with the body (below) to create a new fruit.
 
 <img width="910" height="567" alt="FastAPI-Flutter-Postman-Screenshot 2025-09-26 161419" src="https://github.com/user-attachments/assets/bcdd071e-f7bb-4f83-87b6-bc50b221292e" />
 
@@ -111,6 +111,8 @@ flutter run
 
 
 ## 📐 App Architecture
+
+### High level overview
 ```md
 Flutter App  ← HTTP (http package) →  FastAPI  
     ↑                                     │  
@@ -118,6 +120,8 @@ Flutter App  ← HTTP (http package) →  FastAPI
  ListView / Form             SQLAlchemy ORM → MySQL  
                              Alembic Migrations  
 ```
+
+### Low level overview
 ```md
 [Flutter UI] → http.get/post → [FastAPI App]
   ↓                          ↓
