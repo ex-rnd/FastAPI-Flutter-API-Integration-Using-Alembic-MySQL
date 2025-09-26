@@ -1,8 +1,10 @@
 import 'dart:convert';
-import 'package:http/http.dart'as http;
+
 import 'package:flutter/material.dart';
-import 'models/fruit.dart';
+import 'package:http/http.dart' as http;
 import 'package:sonic/config.dart' as config;
+
+import 'models/fruit.dart';
 
 class ListFruitsScreen extends StatefulWidget {
   const ListFruitsScreen({super.key});
@@ -11,48 +13,42 @@ class ListFruitsScreen extends StatefulWidget {
   State<ListFruitsScreen> createState() => _ListFruitsScreenState();
 }
 
-
 class _ListFruitsScreenState extends State<ListFruitsScreen> {
   Future<List<Fruit>> fetchFruits() async {
     final response = await http.get(Uri.parse('${config.apiURL}/fruits'));
     if (response.statusCode == 200) {
       final List jsonData = jsonDecode(response.body);
       return jsonData.map((json) => Fruit.fromJson(json)).toList();
-    }
-    else {
+    } else {
       throw Exception('Failed to load fruits');
     }
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Fruit>>(
-        future: fetchFruits(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          }
-          if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          }
+      future: fetchFruits(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
+        if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        }
 
-          final fruits = snapshot.data!;
+        final fruits = snapshot.data!;
 
-          return ListView.builder(
-              itemCount: fruits.length,
-              itemBuilder: (context, index) {
-                final fruit = fruits[index];
-                return ListTile(
-                  title: Text(fruit.name),
-                  subtitle: Text(fruit.seedless ? 'Has Seeds' : 'Seedless'),
-                );
-              },
-          );
-        },
+        return ListView.builder(
+          itemCount: fruits.length,
+          itemBuilder: (context, index) {
+            final fruit = fruits[index];
+            return ListTile(
+              title: Text(fruit.name),
+              subtitle: Text(fruit.seedless ? 'Has Seeds' : 'Seedless'),
+            );
+          },
+        );
+      },
     );
   }
 }
-
