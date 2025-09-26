@@ -62,27 +62,6 @@ def update_fruit(fruit_id: int, fruit_in: FruitCreate, db: Session = Depends(get
     return fruit_db
 
 
-
-
-
-# # Endpoint 3
-# @app.get("/fruits", response_model=list[FruitCreate])
-# def get_fruits():
-#     return fruits
-
-# # Endpoint 4
-# @app.get("/fruits/{fruit_index}", response_model=FruitCreate)
-# def get_fruit(fruit_index: int) -> FruitCreate:
-#     if (0 <= fruit_index < len(fruits)):
-#         return fruits[fruit_index]
-#     else:
-#         raise HTTPException(status_code=404, detail="Fruit not found")
-
-
-##
+## How to run the app backend, every single time
 # uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
-##
-
-##
-# uvicorn main:app --reload --app-dir app --host 127.0.0.1 --port 8000
 ##
